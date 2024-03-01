@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Usuario;
 use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
@@ -11,12 +12,14 @@ class UsuarioController extends Controller
         $usuario = $request->usuario;
         $senha = $request->senha;
 
-        if($usuario === "idail")
+        $usuarios = Usuario::where('usuario', '=', $usuario)->where('senha', '=', $senha)->first();
+
+        if($usuarios != null)
         {
             echo json_encode("validado");
+            session_start();
+            $_SESSION['usuario'] = $usuarios->usuario;
         }
-
-        //$usuarios = usuario::where('usuario', '=', $usuario)->orwhere('cpf', '=', $usuario)->where('senha', '=', $senha)->first();
         
         // if(@$usuarios->id != null){
         //     @session_start();

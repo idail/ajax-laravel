@@ -30,9 +30,9 @@
             </div>
         </div>
     </form>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
-    </script>
+    </script> --}}
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <script>
@@ -49,18 +49,25 @@
 
             debugger;
             var dados_formulario = $("#formulario-usuario")[0];
-            var formulario = new FormData(dados_formulario);
+            var valores_formulario = new FormData(dados_formulario);
+
+            // let recebe_usuario = $("#usuario").val();
+            // let recebe_senha = $("#senha").val();
+
             var url_destino = "{{ route('usuarios.login') }}";
             $.ajax({
                 url: "{{route('usuarios.login')}}",
                 type: "post",
-                data: formulario,
+                data: valores_formulario,
                 processData:false,
                 contentType:false,
                 dataType: "json",
                 success: function(response) {
                     debugger;
-                    console.log(response);
+                    if(response === "validado")
+                    {
+                        window.location.href = "{{route('pagina_inicial')}}";
+                    }
                 }
             });
         });
